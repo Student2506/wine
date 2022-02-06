@@ -3,7 +3,7 @@ env/
 
 excel_reader.py
 wine*
-!wine3.xlsx
+
 
 .replit
 index.html
