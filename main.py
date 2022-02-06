@@ -19,10 +19,10 @@ products = pd.read_excel(
     'wine3.xlsx', sheet_name='Лист1', index_col=[0]
 ).astype({'Цена': 'int32'}).replace(np.nan, None).sort_index()
 products.reset_index(level=0, inplace=True)
-rows = products.sort_values(by=['Категория']).to_dict(orient='index')
+grouped_wines = products.sort_values(by=['Категория']).to_dict(orient='index')
 wines = defaultdict(list)
-for row in rows.values():
-    wines[row['Категория']].append(row)
+for wine in grouped_wines.values():
+    wines[wine['Категория']].append(wine)
 rendered_page = template.render(
     age=dt.datetime.today().year-FOUNDATION_YEAR,
     wines=wines,
