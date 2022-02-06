@@ -16,7 +16,7 @@ def main():
     )
     template = env.get_template('template.html')
     grouped_wines = pd.read_excel(
-        'wine3.xlsx', sheet_name='Лист1', index_col=[1], keep_default_na=False
+        'wine3.xlsx', sheet_name='Лист1', keep_default_na=False
     ).astype({'Цена': 'int32'}).sort_values(
         by=['Категория']
     ).to_dict(orient='index')
