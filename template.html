@@ -93,11 +93,11 @@
             </p>
           </div>
         </div>
-        {% for wine_category in wines %}
+        {% for wine_category_name, wines_in_category in wines.items() %}
           <div class="col-12 section-title text-center mb-5">
-            <h2 class="d-block">{{wine_category}}</h2>
+            <h2 class="d-block">{{wine_category_name}}</h2>
             <div class="row">
-              {% for wine in wines[wine_category] %}
+              {% for wine in wines_in_category %}
                 {% set category, name, kind, price, image, discount = wine.values() %}
                 <div class="col-lg-4 mb-5 col-md-6">
                   <div class="wine_v_1 text-center pb-4 pt-5">
