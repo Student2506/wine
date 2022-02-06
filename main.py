@@ -6,6 +6,8 @@ import numpy as np
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+FOUNDATION_YEAR = 1920
+
 env = Environment(
     loader=FileSystemLoader('.'),
     autoescape=select_autoescape(['html', 'xml'])
@@ -22,7 +24,7 @@ wines = defaultdict(list)
 for row in rows.values():
     wines[row['Категория']].append(row)
 rendered_page = template.render(
-    age=dt.datetime.today().year-dt.datetime(year=1920, month=1, day=1).year,
+    age=dt.datetime.today().year-FOUNDATION_YEAR,
     wines=wines,
 )
 
