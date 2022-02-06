@@ -1,8 +1,8 @@
 import datetime as dt
 from collections import defaultdict
+from contextlib import suppress
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-import numpy as np
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
@@ -14,14 +14,10 @@ def main():
         loader=FileSystemLoader('.'),
         autoescape=select_autoescape(['html', 'xml'])
     )
-
     template = env.get_template('template.html')
-
-    products = pd.read_excel(
-        'wine3.xlsx', sheet_name='Лист1', index_col=[0]
-    ).astype({'Цена': 'int32'}).replace(np.nan, None).sort_index()
-    products.reset_index(level=0, inplace=True)
-    grouped_wines = products.sort_values(
+    grouped_wines = pd.read_excel(
+        'wine3.xlsx', sheet_name='Лист1', index_col=[1], keep_default_na=False
+    ).astype({'Цена': 'int32'}).sort_values(
         by=['Категория']
     ).to_dict(orient='index')
     wines = defaultdict(list)
@@ -34,10 +30,10 @@ def main():
 
     with open('index.html', 'w', encoding='utf8') as file:
         file.write(rendered_page)
-
     server = HTTPServer(('0.0.0.0', 8000), SimpleHTTPRequestHandler)
     server.serve_forever()
 
 
 if __name__ == '__main__':
-    main()
+    with suppress(KeyboardInterrupt):
+        main()
